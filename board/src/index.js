@@ -13,7 +13,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
-      {/* <Route path='/post' element={<CreatePost/>} /> */}
+      <Route path='/post' element={<CreatePost/>} />
       <Route path="/post/:id" element={<PostDetail />} />
       {/* <Route path='/post/modify' element={<UpdatePost/>} /> */}
     </Routes>

@@ -2,13 +2,24 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import styled from "styled-components";
+import Pagination from "react-js-pagination";
+import './styles/pagination.css';
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [totalCount, setTotalcount] = useState(0);
+  const [page, setPage] = useState(1);
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
 
   const getPosts = async () => {
     try {
       await axios.get('api/v1/posts').then(({ data }) => {
+        setTotalcount(data.length);
+        console.log(totalCount);
         setPosts(data);
       });
     } catch (err) {
@@ -21,7 +32,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <Margin>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -33,7 +44,7 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {posts.map((item, index) => {
+          {posts.map((item) => {
             return (
               <tr key={item.id}>
                 <td>{item.id}</td>
@@ -48,11 +59,27 @@ function App() {
           })}
         </tbody>
       </Table>
+      <Pagination
+        activePage={page}
+        itemsCountPerPage={5}
+        totalItemsCount={totalCount}
+        pageRangeDisplayed={5}
+        prevPageText={"‹"}
+        nextPageText={"›"}
+        onChange={handlePageChange}
+      />
       <Link to={'/post'}>
         <Button>글쓰기</Button>
       </Link>
-    </div>
+    </Margin>
   );
 }
+
+const Margin = styled.div`
+  margin-top: 100px;
+  margin-right: 100px;
+  margin-bottom: 100px;
+  margin-left: 100px;
+`;
 
 export default App;
