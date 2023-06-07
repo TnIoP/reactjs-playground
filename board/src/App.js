@@ -17,10 +17,14 @@ function App() {
 
   const getPosts = async () => {
     try {
-      await axios.get('api/v1/posts').then(({ data }) => {
-        setTotalcount(data.length);
-        console.log(totalCount);
-        setPosts(data);
+      await axios.get('api/v1/posts', {
+        params: {
+          limit: 5,
+          offset: page * 5,
+        }
+      }).then(({ data }) => {
+        setTotalcount(data.total);
+        setPosts(data.posts);
       });
     } catch (err) {
       console.log(err);
@@ -29,7 +33,7 @@ function App() {
 
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [page]);
 
   return (
     <Margin>
