@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import styled from "styled-components";
-import Pagination from "react-js-pagination";
+import styled from 'styled-components';
+import Pagination from 'react-js-pagination';
 import './styles/pagination.css';
 
 function App() {
@@ -20,15 +20,17 @@ function App() {
     const offset = (page - 1) * limit;
     const getPosts = async () => {
       try {
-        await axios.get('api/v1/posts', {
-          params: {
-            limit,
-            offset,
-          }
-        }).then(({ data }) => {
-          setTotalcount(data.total);
-          setPosts(data.posts);
-        });
+        await axios
+          .get('api/v1/posts', {
+            params: {
+              limit,
+              offset,
+            },
+          })
+          .then(({ data }) => {
+            setTotalcount(data.total);
+            setPosts(data.posts);
+          });
       } catch (err) {
         console.log(err);
       }
@@ -88,8 +90,8 @@ function App() {
         itemsCountPerPage={limit}
         totalItemsCount={totalCount}
         pageRangeDisplayed={limit}
-        prevPageText={"‹"}
-        nextPageText={"›"}
+        prevPageText={'‹'}
+        nextPageText={'›'}
         onChange={handlePageChange}
       />
     </Margin>

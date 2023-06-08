@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Button, FloatingLabel } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
-import styled from "styled-components";
+import styled from 'styled-components';
 
 function PostDetail() {
   const [post, setPost] = useState('');
