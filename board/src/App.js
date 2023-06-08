@@ -11,29 +11,28 @@ function App() {
   const [totalCount, setTotalcount] = useState(0);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const offset = (page - 1) * limit;
 
   const handlePageChange = (page) => {
     setPage(page);
   };
 
-  const getPosts = async () => {
-    try {
-      await axios.get('api/v1/posts', {
-        params: {
-          limit,
-          offset,
-        }
-      }).then(({ data }) => {
-        setTotalcount(data.total);
-        setPosts(data.posts);
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
+    const offset = (page - 1) * limit;
+    const getPosts = async () => {
+      try {
+        await axios.get('api/v1/posts', {
+          params: {
+            limit,
+            offset,
+          }
+        }).then(({ data }) => {
+          setTotalcount(data.total);
+          setPosts(data.posts);
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    };
     getPosts();
   }, [limit, page]);
 
