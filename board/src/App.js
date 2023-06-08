@@ -10,6 +10,8 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [totalCount, setTotalcount] = useState(0);
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const offset = (page - 1) * limit;
 
   const handlePageChange = (page) => {
     setPage(page);
@@ -19,8 +21,8 @@ function App() {
     try {
       await axios.get('api/v1/posts', {
         params: {
-          limit: 5,
-          offset: page * 5,
+          limit,
+          offset,
         }
       }).then(({ data }) => {
         setTotalcount(data.total);
@@ -33,10 +35,26 @@ function App() {
 
   useEffect(() => {
     getPosts();
-  }, [page]);
+  }, [limit, page]);
 
   return (
     <Margin>
+      <label>
+        <select
+          type="number"
+          value={limit}
+          onChange={({ target: { value } }) => {
+            setLimit(Number(value));
+            setPage(1);
+          }}
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="50">50</option>
+        </select>
+      </label>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -63,18 +81,18 @@ function App() {
           })}
         </tbody>
       </Table>
+      <Link to={'/post'}>
+        <Button>글쓰기</Button>
+      </Link>
       <Pagination
         activePage={page}
-        itemsCountPerPage={5}
+        itemsCountPerPage={limit}
         totalItemsCount={totalCount}
-        pageRangeDisplayed={5}
+        pageRangeDisplayed={limit}
         prevPageText={"‹"}
         nextPageText={"›"}
         onChange={handlePageChange}
       />
-      <Link to={'/post'}>
-        <Button>글쓰기</Button>
-      </Link>
     </Margin>
   );
 }
