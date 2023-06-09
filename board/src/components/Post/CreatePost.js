@@ -1,44 +1,60 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 function CreatePost() {
+  const navigation = useNavigate();
   const [post, setPost] = useState({
     title: '',
     ip: '',
     contents: '',
   });
-  const { title, ip, contents } = post;
-  const getIp = async () => {
-    axios.get('https://geolocation-db.com/json/').then((res) => {
-      console.log('data : ', res);
+  const { title, contents } = post;
+
+  const onChange = (event) => {
+    const { value, name } = event.target; //event.target에서 name과 value만 가져오기
+    setPost({
+      ...post,
+      [name]: value,
     });
   };
+
   const savePost = async () => {
-    await axios.get('api/v1/posts').then(({ data }) => {
-      setPost(data);
+    await axios.get('https://geolocation-db.com/json/').then((res) => {
+      post.ip = res.data.IPv4;
     });
+    await axios.post('api/v1/posts', post).then(({ res }) => {
+      alert('등록되었습니다.');
+    });
+    navigation('/');
   };
+
+  const backToList = () => {
+    navigation('/');
+  };
+
   return (
     <Margin>
       <Form>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>제목</Form.Label>
-          <Form.Control value={title} />
+          <Form.Control name="title" value={title || ''} onChange={onChange} />
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
           <Form.Label>내용</Form.Label>
-          <Form.Control as="textarea" rows={3} value={contents} />
+          <Form.Control
+            as="textarea"
+            rows={3}
+            name="contents"
+            value={contents || ''}
+            onChange={onChange}
+          />
         </Form.Group>
       </Form>
-      <Link to={'/'}>
-        <Button>등록</Button>
-      </Link>
-      <Link to={'/'}>
-        <Button>글목록</Button>
-      </Link>
+      <Button onClick={savePost}>등록</Button>
+      <Button onClick={backToList}>글목록</Button>
     </Margin>
   );
 }
