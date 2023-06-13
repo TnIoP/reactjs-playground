@@ -28,8 +28,8 @@ function App() {
             },
           })
           .then(({ data }) => {
-            setTotalcount(data.total);
-            setPosts(data.posts);
+            setTotalcount(data.data.total);
+            setPosts(data.data.posts);
           });
       } catch (err) {
         console.log(err);
