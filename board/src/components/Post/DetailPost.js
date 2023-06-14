@@ -59,7 +59,7 @@ const DetailPost = () => {
 
   useEffect(() => {
     getPost();
-  }, []);
+  });
 
   return (
     <Margin>

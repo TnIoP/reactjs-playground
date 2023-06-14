@@ -9,14 +9,16 @@ const GetComments = () => {
   const location = useLocation();
 
   const [comments, setComments] = useState([]);
-  const [userIp, setUserIp] = useState('');
   const [show, setShow] = useState(false);
   const [comment, setComment] = useState({});
 
-  const handleShow = (item) => {
-    if (userIp !== item.ip) {
-      return alert('작성자가 아닙니다.');
-    }
+  const handleShow = async (item) => {
+    await axios.get('https://geolocation-db.com/json/').then((res) => {
+        const userIp = res.data.IPv4;
+        if (userIp !== item.ip) {
+          return alert('작성자가 아닙니다.');
+        }
+      });
     setShow(true);
     setComment({
       ...comment,
@@ -37,9 +39,12 @@ const GetComments = () => {
 
   const deleteComment = async (id, ip) => {
     try {
-      if (userIp !== ip) {
-        return alert('작성자가 아닙니다.');
-      }
+      await axios.get('https://geolocation-db.com/json/').then((res) => {
+        const userIp = res.data.IPv4;
+        if (userIp !== ip) {
+          return alert('작성자가 아닙니다.');
+        }
+      });
       const comment = {
         ip,
       };
@@ -51,20 +56,9 @@ const GetComments = () => {
     }
   };
 
-  const getUserIp = async () => {
-    try {
-      await axios.get('https://geolocation-db.com/json/').then((res) => {
-        setUserIp(res.data.IPv4);
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
     getComments();
-    getUserIp();
-  }, []);
+  }, [comments]);
 
   return (
     <Margin>
@@ -87,6 +81,9 @@ const GetComments = () => {
                 >
                   수정
                 </Button>
+                <Button onClick={() => deleteComment(item.id, item.ip)}>
+                  삭제
+                </Button>
                 {show && (
                   <UpdateComment
                     item={item}
@@ -95,9 +92,6 @@ const GetComments = () => {
                     setShow={setShow}
                   />
                 )}
-                <Button onClick={() => deleteComment(item.id, item.ip)}>
-                  삭제
-                </Button>
               </ul>
             );
           })}

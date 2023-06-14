@@ -34,6 +34,7 @@ const UpdateComment = ({ item, show, setComments, setShow }) => {
         .put(`/api/v1/comments/${comment.id}`, comment)
         .then(({ res }) => {
           alert('수정되었습니다.');
+          handleClose();
         });
     } catch (err) {
       console.log(err);
