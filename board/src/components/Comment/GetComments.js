@@ -4,22 +4,32 @@ import { Button } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import UpdateComment from './UpdateComment';
+import ReplyComment from './ReplyComment';
 
 const GetComments = () => {
   const location = useLocation();
 
   const [comments, setComments] = useState([]);
-  const [show, setShow] = useState(false);
+  const [showReply, setShowReply] = useState(false);
+  const [showUpdate, setShowUpdate] = useState(false);
   const [comment, setComment] = useState({});
 
-  const handleShow = async (item) => {
+  const handleShowReply = async (item) => {
+    
+      setShowReply(true);
+    setComment({
+      ...comment,
+    });
+  };
+
+  const handleShowUpdate = async (item) => {
     await axios.get('https://geolocation-db.com/json/').then((res) => {
         const userIp = res.data.IPv4;
         if (userIp !== item.ip) {
           return alert('작성자가 아닙니다.');
         }
       });
-    setShow(true);
+      setShowUpdate(true);
     setComment({
       ...comment,
     });
@@ -76,7 +86,14 @@ const GetComments = () => {
                 <li>{item.updatedAt}</li>
                 <Button
                   onClick={() => {
-                    handleShow(item);
+                    handleShowReply(item);
+                  }}
+                >
+                  댓글
+                </Button>
+                <Button
+                  onClick={() => {
+                    handleShowUpdate(item);
                   }}
                 >
                   수정
@@ -84,12 +101,20 @@ const GetComments = () => {
                 <Button onClick={() => deleteComment(item.id, item.ip)}>
                   삭제
                 </Button>
-                {show && (
+                {showReply && (
+                  <ReplyComment
+                    item={item}
+                    show={showReply}
+                    setComments={setComments}
+                    setShow={setShowReply}
+                  />
+                )}
+                {showUpdate && (
                   <UpdateComment
                     item={item}
-                    show={show}
+                    show={showUpdate}
                     setComments={setComments}
-                    setShow={setShow}
+                    setShow={setShowUpdate}
                   />
                 )}
               </ul>

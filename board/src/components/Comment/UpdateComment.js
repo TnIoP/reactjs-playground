@@ -53,7 +53,7 @@ const UpdateComment = ({ item, show, setComments, setShow }) => {
           onChange={onChange}
         />
 
-        <Button onClick={updateComment}>등록</Button>
+        <Button onClick={updateComment}>수정등록</Button>
         <Button onClick={() => handleClose()}>취소</Button>
       </>
     </Margin>
