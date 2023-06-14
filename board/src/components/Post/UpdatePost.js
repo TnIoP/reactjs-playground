@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-function UpdatePost() {
+const UpdatePost = () => {
   const navigation = useNavigate();
   const location = useLocation();
 
@@ -31,7 +31,6 @@ function UpdatePost() {
         post.ip = res.data.IPv4;
       });
       await axios.put(`/api/v1/posts/${post.id}`, post).then(({ data }) => {
-        console.log(data.data);
         alert('수정되었습니다.');
       });
       navigation('/');
@@ -40,7 +39,7 @@ function UpdatePost() {
     }
   };
 
-  const backToList = () => {
+  const goToList = () => {
     navigation('/');
   };
 
@@ -63,10 +62,10 @@ function UpdatePost() {
         </Form.Group>
       </Form>
       <Button onClick={updatePost}>수정</Button>
-      <Button onClick={backToList}>글목록</Button>
+      <Button onClick={goToList}>글목록</Button>
     </Margin>
   );
-}
+};
 
 const Margin = styled.div`
   margin-top: 100px;

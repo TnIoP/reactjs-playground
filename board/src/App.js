@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Pagination from 'react-js-pagination';
 import './styles/pagination.css';
 
-function App() {
+const App = () => {
   const [posts, setPosts] = useState([]);
   const [totalCount, setTotalcount] = useState(0);
   const [page, setPage] = useState(1);
@@ -98,7 +98,7 @@ function App() {
       />
     </Margin>
   );
-}
+};
 
 const Margin = styled.div`
   margin-top: 100px;

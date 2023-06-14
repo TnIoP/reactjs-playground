@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-function CreateComment() {
+const CreateComment = () => {
   const location = useLocation();
   const [comment, setComment] = useState({
     ip: '',
@@ -53,7 +53,7 @@ function CreateComment() {
       </form>
     </Margin>
   );
-}
+};
 
 const Margin = styled.div`
   margin-top: 50px;

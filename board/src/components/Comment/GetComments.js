@@ -5,11 +5,23 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import UpdateComment from './UpdateComment';
 
-function GetComments() {
+const GetComments = () => {
   const location = useLocation();
 
   const [comments, setComments] = useState([]);
   const [userIp, setUserIp] = useState('');
+  const [show, setShow] = useState(false);
+  const [comment, setComment] = useState({});
+
+  const handleShow = (item) => {
+    if (userIp !== item.ip) {
+      return alert('작성자가 아닙니다.');
+    }
+    setShow(true);
+    setComment({
+      ...comment,
+    });
+  };
 
   const getComments = async () => {
     try {
@@ -47,19 +59,6 @@ function GetComments() {
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const [show, setShow] = useState(false);
-  const [comment, setComment] = useState({});
-
-  const handleShow = (item) => {
-    if (userIp !== item.ip) {
-      return alert('작성자가 아닙니다.');
-    }
-    setShow(true);
-    setComment({
-      ...comment,
-    });
   };
 
   useEffect(() => {
@@ -106,7 +105,7 @@ function GetComments() {
       </div>
     </Margin>
   );
-}
+};
 
 const Margin = styled.div`
   margin-top: 50px;

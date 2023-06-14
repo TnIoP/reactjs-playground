@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-function CreatePost() {
+const CreatePost = () => {
   const navigation = useNavigate();
   const [post, setPost] = useState({
     title: '',
@@ -57,7 +57,7 @@ function CreatePost() {
       <Button onClick={backToList}>글목록</Button>
     </Margin>
   );
-}
+};
 
 const Margin = styled.div`
   margin-top: 100px;
