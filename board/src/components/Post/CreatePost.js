@@ -14,7 +14,7 @@ function CreatePost() {
   const { title, contents } = post;
 
   const onChange = (event) => {
-    const { value, name } = event.target; //event.target에서 name과 value만 가져오기
+    const { value, name } = event.target;
     setPost({
       ...post,
       [name]: value,

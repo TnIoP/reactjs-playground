@@ -40,7 +40,14 @@ function PostDetail() {
   };
 
   const goToEdit = () => {
-    navigation('/edit');
+    navigation('/edit', {
+      state: {
+        id: post.id,
+        title: post.title,
+        ip: post.ip,
+        contents: post.contents,
+      },
+    });
   };
 
   const backToList = () => {
@@ -73,17 +80,7 @@ function PostDetail() {
         <label>글 수정 시간 :</label>
         <label>{post.updatedAt}</label>
       </div>
-      <Button
-        onClick={goToEdit}
-        state={{
-          id: post.id,
-          title: post.title,
-          ip: post.ip,
-          contents: post.contents,
-        }}
-      >
-        수정
-      </Button>
+      <Button onClick={goToEdit}>수정</Button>
       <Button onClick={deletePost}>삭제</Button>
       <Button onClick={backToList}>글목록</Button>
     </Margin>
