@@ -4,6 +4,9 @@ import { Button } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import CreateComment from '../Comment/CreateComment';
+import GetComments from '../Comment/GetComments';
+
 function PostDetail() {
   const navigation = useNavigate();
   const [post, setPost] = useState({
@@ -83,6 +86,8 @@ function PostDetail() {
       <Button onClick={goToEdit}>수정</Button>
       <Button onClick={deletePost}>삭제</Button>
       <Button onClick={backToList}>글목록</Button>
+      <CreateComment />
+      <GetComments />
     </Margin>
   );
 }

@@ -72,7 +72,9 @@ function App() {
               <tr key={item.id}>
                 <td>{item.id}</td>
                 <td>
-                  <Link to={`/post/${item.id}`}>{item.title}</Link>
+                  <Link to={`/post/${item.id}`} state={{ post_id: item.id }}>
+                    {item.title}
+                  </Link>
                 </td>
                 <td>{item.ip}</td>
                 <td>{item.createdAt}</td>
