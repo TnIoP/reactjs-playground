@@ -43,19 +43,19 @@ const UpdateComment = ({ item, show, setComments, setShow }) => {
 
   return (
     <Margin>
-      <>
-        <Form.Control
-          show={show.toString()}
-          type="text"
-          placeholder="Normal text"
-          name="contents"
-          value={contents || ''}
-          onChange={onChange}
-        />
-
-        <Button onClick={updateComment}>수정등록</Button>
+      <form>
+        <span>
+          <input
+            type="text"
+            placeholder="댓글을 입력해주세요."
+            name="contents"
+            value={contents || ''}
+            onChange={onChange}
+          />
+        </span>
+        <Button onClick={() => updateComment()}>댓글수정</Button>
         <Button onClick={() => handleClose()}>취소</Button>
-      </>
+      </form>
     </Margin>
   );
 };
