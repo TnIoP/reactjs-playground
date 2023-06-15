@@ -29,27 +29,38 @@ const DetailPost = () => {
 
   const deletePost = async () => {
     try {
-      await axios.get('https://geolocation-db.com/json/').then((res) => {
-        post.ip = res.data.IPv4;
+      await axios.get('https://geolocation-db.com/json/').then(async (res) => {
+        const userIp = res.data.IPv4;
+        if (userIp !== post.ip) {
+          return alert('작성자가 아닙니다.');
+        } else {
+          await axios.post(`/api/v1/posts/${id}`, post).then(({ data }) => {
+            setPost(data);
+            alert('삭제되었습니다.');
+          });
+          navigation('/');
+        }
       });
-      await axios.post(`/api/v1/posts/${id}`, post).then(({ data }) => {
-        setPost(data);
-        alert('삭제되었습니다.');
-      });
-      navigation('/');
     } catch (err) {
       console.log(err);
     }
   };
 
-  const goToEdit = () => {
-    navigation('/edit', {
-      state: {
-        id: post.id,
-        title: post.title,
-        ip: post.ip,
-        contents: post.contents,
-      },
+  const goToEdit = async () => {
+    await axios.get('https://geolocation-db.com/json/').then((res) => {
+      const userIp = res.data.IPv4;
+      if (userIp !== post.ip) {
+        return alert('작성자가 아닙니다.');
+      } else {
+        navigation('/edit', {
+          state: {
+            id: post.id,
+            title: post.title,
+            ip: post.ip,
+            contents: post.contents,
+          },
+        });
+      }
     });
   };
 
@@ -59,7 +70,7 @@ const DetailPost = () => {
 
   useEffect(() => {
     getPost();
-  });
+  }, []);
 
   return (
     <Margin>

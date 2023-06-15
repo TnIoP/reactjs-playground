@@ -57,7 +57,7 @@ const CreateComment = () => {
 
 const Margin = styled.div`
   margin-top: 50px;
-  margin-bottom: 100px;
+  margin-bottom: 10px;
 `;
 
 export default CreateComment;

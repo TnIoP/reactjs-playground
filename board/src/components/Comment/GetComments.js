@@ -14,9 +14,8 @@ const GetComments = () => {
   const [showUpdate, setShowUpdate] = useState(false);
   const [comment, setComment] = useState({});
 
-  const handleShowReply = async (item) => {
-    
-      setShowReply(true);
+  const handleShowReply = async () => {
+    setShowReply(true);
     setComment({
       ...comment,
     });
@@ -24,12 +23,12 @@ const GetComments = () => {
 
   const handleShowUpdate = async (item) => {
     await axios.get('https://geolocation-db.com/json/').then((res) => {
-        const userIp = res.data.IPv4;
-        if (userIp !== item.ip) {
-          return alert('작성자가 아닙니다.');
-        }
-      });
-      setShowUpdate(true);
+      const userIp = res.data.IPv4;
+      if (userIp !== item.ip) {
+        return alert('작성자가 아닙니다.');
+      }
+    });
+    setShowUpdate(true);
     setComment({
       ...comment,
     });
@@ -68,7 +67,7 @@ const GetComments = () => {
 
   useEffect(() => {
     getComments();
-  }, [comments]);
+  }, []);
 
   return (
     <Margin>
@@ -76,47 +75,46 @@ const GetComments = () => {
         <div>
           {comments.map((item) => {
             return (
-              <ul key={item.id} style={{marginLeft: item.depth*50+'px'}}>
-                <li>{item.id}</li>
-                <li>{item.ip}</li>
-                <li>댓글내용 : {item.contents}</li>
-                <li>{item.parentCommentId}</li>
-                <li>{item.depth}</li>
-                <li>{item.createdAt}</li>
-                <li>{item.updatedAt}</li>
-                <Button
-                  onClick={() => {
-                    handleShowReply(item);
-                  }}
-                >
-                  댓글
-                </Button>
-                <Button
-                  onClick={() => {
-                    handleShowUpdate(item);
-                  }}
-                >
-                  수정
-                </Button>
-                <Button onClick={() => deleteComment(item.id, item.ip)}>
-                  삭제
-                </Button>
-                {showReply && (
-                  <ReplyComment
-                    item={item}
-                    show={showReply}
-                    setComments={setComments}
-                    setShow={setShowReply}
-                  />
-                )}
-                {showUpdate && (
-                  <UpdateComment
-                    item={item}
-                    show={showUpdate}
-                    setComments={setComments}
-                    setShow={setShowUpdate}
-                  />
-                )}
+              <ul key={item.id} style={{ marginLeft: item.depth * 50 + 'px' }}>
+                <li>
+                  댓글 id : {item.id} / 작성자 ip : {item.ip} / 댓글내용 :{' '}
+                  {item.contents} / 부모 id : {item.parentCommentId} / depth :{' '}
+                  {item.depth} / 생성 시간 : {item.createdAt} / 수정 시간 :{' '}
+                  {item.updatedAt}
+                  <Button
+                    onClick={() => {
+                      handleShowReply();
+                    }}
+                  >
+                    댓글
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      handleShowUpdate(item);
+                    }}
+                  >
+                    수정
+                  </Button>
+                  <Button onClick={() => deleteComment(item.id, item.ip)}>
+                    삭제
+                  </Button>
+                  {showReply && (
+                    <ReplyComment
+                      item={item}
+                      show={showReply}
+                      setComments={setComments}
+                      setShow={setShowReply}
+                    />
+                  )}
+                  {showUpdate && (
+                    <UpdateComment
+                      item={item}
+                      show={showUpdate}
+                      setComments={setComments}
+                      setShow={setShowUpdate}
+                    />
+                  )}
+                </li>
               </ul>
             );
           })}
@@ -128,7 +126,7 @@ const GetComments = () => {
 
 const Margin = styled.div`
   margin-top: 50px;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 `;
 
 export default GetComments;

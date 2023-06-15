@@ -10,7 +10,7 @@ const ReplyComment = ({ item, show, setComments, setShow }) => {
     ip: '',
     contents: '',
     parentCommentId: item.id,
-    depth: item.depth+1,
+    depth: item.depth + 1,
     isHide: false,
     postId: location.state.post_id,
   });
@@ -52,7 +52,7 @@ const ReplyComment = ({ item, show, setComments, setShow }) => {
             onChange={onChange}
           />
         </span>
-        <Button onClick={createComment}>댓글등록</Button>
+        <Button onClick={() => createComment()}>댓글등록</Button>
         <Button onClick={() => handleClose()}>취소</Button>
       </form>
     </Margin>
@@ -60,8 +60,8 @@ const ReplyComment = ({ item, show, setComments, setShow }) => {
 };
 
 const Margin = styled.div`
-  margin-top: 50px;
-  margin-bottom: 100px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   margin-left: 10px;
 `;
 
