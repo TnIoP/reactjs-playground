@@ -76,7 +76,7 @@ const GetComments = () => {
         <div>
           {comments.map((item) => {
             return (
-              <ul key={item.id}>
+              <ul key={item.id} style={{marginLeft: item.depth*50+'px'}}>
                 <li>{item.id}</li>
                 <li>{item.ip}</li>
                 <li>댓글내용 : {item.contents}</li>

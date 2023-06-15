@@ -33,6 +33,7 @@ const ReplyComment = ({ item, show, setComments, setShow }) => {
       });
       await axios.post(`/api/v1/comments`, comment).then(({ res }) => {
         alert('등록되었습니다.');
+        handleClose();
       });
     } catch (err) {
       console.log(err);
