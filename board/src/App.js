@@ -91,7 +91,7 @@ const App = () => {
         activePage={page}
         itemsCountPerPage={limit}
         totalItemsCount={totalCount}
-        pageRangeDisplayed={limit}
+        pageRangeDisplayed={5}
         prevPageText={'‹'}
         nextPageText={'›'}
         onChange={handlePageChange}
