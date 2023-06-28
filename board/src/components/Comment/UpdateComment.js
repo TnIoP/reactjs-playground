@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Form } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 const UpdateComment = ({ item, show, setComments, setShow }) => {
+  const location = useLocation();
   const [comment, setComment] = useState({
     id: item.id,
     ip: item.ip,
@@ -34,6 +36,7 @@ const UpdateComment = ({ item, show, setComments, setShow }) => {
         .put(`/api/v1/comments/${comment.id}`, comment)
         .then(({ res }) => {
           alert('수정되었습니다.');
+          window.location.replace(`/post/${location.state.post_id}`);
           handleClose();
         });
     } catch (err) {

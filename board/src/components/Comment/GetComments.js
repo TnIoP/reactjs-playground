@@ -59,6 +59,7 @@ const GetComments = () => {
       };
       await axios.post(`/api/v1/comments/${id}`, comment).then(({ data }) => {
         alert('삭제되었습니다.');
+        window.location.replace(`/post/${location.state.post_id}`);
       });
     } catch (err) {
       console.log(err);

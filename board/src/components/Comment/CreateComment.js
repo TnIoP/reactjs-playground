@@ -31,6 +31,7 @@ const CreateComment = () => {
       });
       await axios.post(`/api/v1/comments`, comment).then(({ res }) => {
         alert('등록되었습니다.');
+        window.location.replace(`/post/${location.state.post_id}`);
       });
     } catch (err) {
       console.log(err);
