@@ -16,7 +16,7 @@ const ReplyComment = ({ item, show, setComments, setShow }) => {
   });
   const { contents } = comment;
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => setShow("");
 
   const onChange = (event) => {
     const { value, name } = event.target;
@@ -33,6 +33,7 @@ const ReplyComment = ({ item, show, setComments, setShow }) => {
       });
       await axios.post(`/api/v1/comments`, comment).then(({ res }) => {
         alert('등록되었습니다.');
+        window.location.replace(`/post/${location.state.post_id}`);
         handleClose();
       });
     } catch (err) {

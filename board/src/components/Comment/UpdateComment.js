@@ -14,7 +14,7 @@ const UpdateComment = ({ item, show, setComments, setShow }) => {
   });
   const { contents } = comment;
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => setShow("");
 
   const onChange = (event) => {
     const { value, name } = event.target;

@@ -10,12 +10,12 @@ const GetComments = () => {
   const location = useLocation();
 
   const [comments, setComments] = useState([]);
-  const [showReply, setShowReply] = useState(false);
-  const [showUpdate, setShowUpdate] = useState(false);
+  const [showReply, setShowReply] = useState("");
+  const [showUpdate, setShowUpdate] = useState("");
   const [comment, setComment] = useState({});
 
-  const handleShowReply = async () => {
-    setShowReply(true);
+  const handleShowReply = async (id) => {
+    setShowReply(id);
     setComment({
       ...comment,
     });
@@ -28,7 +28,7 @@ const GetComments = () => {
         return alert('작성자가 아닙니다.');
       }
     });
-    setShowUpdate(true);
+    setShowUpdate(item.id);
     setComment({
       ...comment,
     });
@@ -84,7 +84,7 @@ const GetComments = () => {
                   {item.updatedAt}
                   <Button
                     onClick={() => {
-                      handleShowReply();
+                      handleShowReply(item.id);
                     }}
                   >
                     댓글
@@ -99,7 +99,7 @@ const GetComments = () => {
                   <Button onClick={() => deleteComment(item.id, item.ip)}>
                     삭제
                   </Button>
-                  {showReply && (
+                  {item.id === showReply && (
                     <ReplyComment
                       item={item}
                       show={showReply}
@@ -107,7 +107,7 @@ const GetComments = () => {
                       setShow={setShowReply}
                     />
                   )}
-                  {showUpdate && (
+                  {item.id === showUpdate && (
                     <UpdateComment
                       item={item}
                       show={showUpdate}
