@@ -9,7 +9,8 @@ const ReplyComment = ({ item, show, setComments, setShow }) => {
   const [comment, setComment] = useState({
     ip: '',
     contents: '',
-    parentCommentId: item.id,
+    parentCommentId: item.parentCommentId,
+    seq: item.seq + 1,
     depth: item.depth + 1,
     isHide: false,
     postId: location.state.post_id,

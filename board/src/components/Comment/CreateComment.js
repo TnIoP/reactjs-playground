@@ -10,6 +10,7 @@ const CreateComment = () => {
     ip: '',
     contents: '',
     parentCommentId: 0,
+    seq: 0,
     depth: 0,
     isHide: false,
     postId: location.state.post_id,
