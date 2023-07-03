@@ -14,6 +14,12 @@ const DetailPost = () => {
     ip: '',
     contents: '',
   });
+  const [ip, setIp] = useState('');
+
+  const onChange = (event) => {
+    const { value } = event.target;
+    setIp(value);
+  };
 
   const { id } = useParams();
 
@@ -29,27 +35,21 @@ const DetailPost = () => {
 
   const deletePost = async () => {
     try {
-      await axios.get('https://geolocation-db.com/json/').then(async (res) => {
-        const userIp = res.data.IPv4;
-        if (userIp !== post.ip) {
-          return alert('작성자가 아닙니다.');
-        } else {
-          await axios.post(`/api/v1/posts/${id}`, post).then(({ data }) => {
-            setPost(data);
-            alert('삭제되었습니다.');
-          });
-          navigation('/');
-        }
+      await axios.post(`/api/v1/posts/${id}`, { ip }).then(({ data }) => {
+        setPost(data);
+        alert('삭제되었습니다.');
       });
+      navigation('/');
     } catch (err) {
       console.log(err);
+      alert('작성자가 아닙니다.');
     }
   };
 
   const goToEdit = async () => {
-    await axios.get('https://geolocation-db.com/json/').then((res) => {
-      const userIp = res.data.IPv4;
-      if (userIp !== post.ip) {
+    
+      
+      if (ip !== post.ip) {
         return alert('작성자가 아닙니다.');
       } else {
         navigation('/edit', {
@@ -61,7 +61,7 @@ const DetailPost = () => {
           },
         });
       }
-    });
+    
   };
 
   const goToList = () => {
@@ -94,6 +94,15 @@ const DetailPost = () => {
         <label>글 수정 시간 :</label>
         <label>{post.updatedAt}</label>
       </div>
+      <span>
+        <input
+          type="text"
+          placeholder="작성자 ip를 입력해주세요."
+          name="ip"
+          value={ip || ''}
+          onChange={onChange}
+        />
+      </span>
       <Button onClick={goToEdit}>수정</Button>
       <Button onClick={deletePost}>삭제</Button>
       <Button onClick={goToList}>글목록</Button>

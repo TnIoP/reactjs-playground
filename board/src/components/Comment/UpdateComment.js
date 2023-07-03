@@ -14,11 +14,12 @@ const UpdateComment = ({ item, show, setComments, setShow }) => {
     contents: item.contents,
     isHide: item.isHide,
   });
+  const [ip, setIp] = useState('');
   const { contents } = comment;
 
-  const handleClose = () => setShow("");
+  const handleClose = () => setShow('');
 
-  const onChange = (event) => {
+  const onCommentChange = (event) => {
     const { value, name } = event.target;
     setComment({
       ...comment,
@@ -26,14 +27,16 @@ const UpdateComment = ({ item, show, setComments, setShow }) => {
     });
   };
 
+  const onChange = (event) => {
+    const { value } = event.target;
+    setIp(value);
+  };
+
   const updateComment = async () => {
     try {
-      await axios.get('https://geolocation-db.com/json/').then((res) => {
-        const userIp = res.data.IPv4;
-        if (userIp !== comment.ip) {
-          return alert('작성자가 아닙니다.');
-        }
-      });
+      if (ip !== comment.ip) {
+        return alert('작성자가 아닙니다.');
+      } else {
       await axios
         .put(`/api/v1/comments/${comment.id}`, comment)
         .then(({ res }) => {
@@ -41,6 +44,7 @@ const UpdateComment = ({ item, show, setComments, setShow }) => {
           window.location.replace(`/post/${location.state.post_id}`);
           handleClose();
         });
+      }
     } catch (err) {
       console.log(err);
     }
@@ -55,9 +59,18 @@ const UpdateComment = ({ item, show, setComments, setShow }) => {
             placeholder="댓글을 입력해주세요."
             name="contents"
             value={contents || ''}
-            onChange={onChange}
+            onChange={onCommentChange}
           />
         </span>
+        <span>
+        <input
+          type="text"
+          placeholder="작성자 ip를 입력해주세요."
+          name="ip"
+          value={ip || ''}
+          onChange={onChange}
+        />
+      </span>
         <Button onClick={() => updateComment()}>댓글수정</Button>
         <Button onClick={() => handleClose()}>취소</Button>
       </form>
