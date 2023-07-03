@@ -9,6 +9,8 @@ const UpdateComment = ({ item, show, setComments, setShow }) => {
   const [comment, setComment] = useState({
     id: item.id,
     ip: item.ip,
+    parentCommentId: item.parentCommentId,
+    seq: item.seq,
     contents: item.contents,
     isHide: item.isHide,
   });
