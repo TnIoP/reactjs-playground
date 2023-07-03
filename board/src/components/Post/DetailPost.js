@@ -47,21 +47,18 @@ const DetailPost = () => {
   };
 
   const goToEdit = async () => {
-    
-      
-      if (ip !== post.ip) {
-        return alert('작성자가 아닙니다.');
-      } else {
-        navigation('/edit', {
-          state: {
-            id: post.id,
-            title: post.title,
-            ip: post.ip,
-            contents: post.contents,
-          },
-        });
-      }
-    
+    if (ip !== post.ip) {
+      return alert('작성자가 아닙니다.');
+    } else {
+      navigation('/edit', {
+        state: {
+          id: post.id,
+          title: post.title,
+          ip: post.ip,
+          contents: post.contents,
+        },
+      });
+    }
   };
 
   const goToList = () => {

@@ -37,13 +37,13 @@ const UpdateComment = ({ item, show, setComments, setShow }) => {
       if (ip !== comment.ip) {
         return alert('작성자가 아닙니다.');
       } else {
-      await axios
-        .put(`/api/v1/comments/${comment.id}`, comment)
-        .then(({ res }) => {
-          alert('수정되었습니다.');
-          window.location.replace(`/post/${location.state.post_id}`);
-          handleClose();
-        });
+        await axios
+          .put(`/api/v1/comments/${comment.id}`, comment)
+          .then(({ res }) => {
+            alert('수정되었습니다.');
+            window.location.replace(`/post/${location.state.post_id}`);
+            handleClose();
+          });
       }
     } catch (err) {
       console.log(err);
@@ -63,14 +63,14 @@ const UpdateComment = ({ item, show, setComments, setShow }) => {
           />
         </span>
         <span>
-        <input
-          type="text"
-          placeholder="작성자 ip를 입력해주세요."
-          name="ip"
-          value={ip || ''}
-          onChange={onChange}
-        />
-      </span>
+          <input
+            type="text"
+            placeholder="작성자 ip를 입력해주세요."
+            name="ip"
+            value={ip || ''}
+            onChange={onChange}
+          />
+        </span>
         <Button onClick={() => updateComment()}>댓글수정</Button>
         <Button onClick={() => handleClose()}>취소</Button>
       </form>
