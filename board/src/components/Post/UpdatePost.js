@@ -27,9 +27,6 @@ const UpdatePost = () => {
 
   const updatePost = async () => {
     try {
-      await axios.get('https://geolocation-db.com/json/').then((res) => {
-        post.ip = res.data.IPv4;
-      });
       await axios.put(`/api/v1/posts/${post.id}`, post).then(({ data }) => {
         alert('수정되었습니다.');
       });

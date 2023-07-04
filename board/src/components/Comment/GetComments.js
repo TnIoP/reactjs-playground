@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import UpdateComment from './UpdateComment';
 import ReplyComment from './ReplyComment';
+import DeleteComment from './DeleteComment';
 
 const GetComments = () => {
   const location = useLocation();
@@ -12,23 +13,31 @@ const GetComments = () => {
   const [comments, setComments] = useState([]);
   const [showReply, setShowReply] = useState('');
   const [showUpdate, setShowUpdate] = useState('');
+  const [showDelete, setShowDelete] = useState('');
   const [comment, setComment] = useState({});
 
   const handleShowReply = async (id) => {
     setShowReply(id);
+    setShowUpdate('');
+    setShowDelete('');
     setComment({
       ...comment,
     });
   };
 
   const handleShowUpdate = async (item) => {
-    await axios.get('https://geolocation-db.com/json/').then((res) => {
-      const userIp = res.data.IPv4;
-      if (userIp !== item.ip) {
-        return alert('작성자가 아닙니다.');
-      }
-    });
+    setShowReply('');
     setShowUpdate(item.id);
+    setShowDelete('');
+    setComment({
+      ...comment,
+    });
+  };
+
+  const handleShowDelete = async (item) => {
+    setShowReply('');
+    setShowUpdate('');
+    setShowDelete(item.id);
     setComment({
       ...comment,
     });
@@ -41,26 +50,6 @@ const GetComments = () => {
         .then(({ data }) => {
           setComments(data.data);
         });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const deleteComment = async (id, ip) => {
-    try {
-      await axios.get('https://geolocation-db.com/json/').then((res) => {
-        const userIp = res.data.IPv4;
-        if (userIp !== ip) {
-          return alert('작성자가 아닙니다.');
-        }
-      });
-      const comment = {
-        ip,
-      };
-      await axios.post(`/api/v1/comments/${id}`, comment).then(({ data }) => {
-        alert('삭제되었습니다.');
-        window.location.replace(`/post/${location.state.post_id}`);
-      });
     } catch (err) {
       console.log(err);
     }
@@ -111,7 +100,11 @@ const GetComments = () => {
                   >
                     수정
                   </Button>
-                  <Button onClick={() => deleteComment(item.id, item.ip)}>
+                  <Button
+                    onClick={() => {
+                      handleShowDelete(item);
+                    }}
+                  >
                     삭제
                   </Button>
                   {item.id === showReply && (
@@ -128,6 +121,14 @@ const GetComments = () => {
                       show={showUpdate}
                       setComments={setComments}
                       setShow={setShowUpdate}
+                    />
+                  )}
+                  {item.id === showDelete && (
+                    <DeleteComment
+                      item={item}
+                      show={showDelete}
+                      setComments={setComments}
+                      setShow={setShowDelete}
                     />
                   )}
                 </li>

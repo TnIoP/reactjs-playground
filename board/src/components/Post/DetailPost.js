@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import * as config from '../../lib/common';
 
 import CreateComment from '../Comment/CreateComment';
 import GetComments from '../Comment/GetComments';
@@ -35,11 +36,15 @@ const DetailPost = () => {
 
   const deletePost = async () => {
     try {
-      await axios.post(`/api/v1/posts/${id}`, { ip }).then(({ data }) => {
-        setPost(data);
-        alert('삭제되었습니다.');
-      });
-      navigation('/');
+      if (post.ip !== ip && ip !== config.MASTER_PW) {
+        return alert('작성자가 아닙니다.');
+      } else {
+        await axios.post(`/api/v1/posts/${id}`, { ip }).then(({ data }) => {
+          setPost(data);
+          alert('삭제되었습니다.');
+        });
+        navigation('/');
+      }
     } catch (err) {
       console.log(err);
       alert('작성자가 아닙니다.');
@@ -47,7 +52,7 @@ const DetailPost = () => {
   };
 
   const goToEdit = async () => {
-    if (ip !== post.ip) {
+    if (ip !== post.ip && ip !== config.MASTER_PW) {
       return alert('작성자가 아닙니다.');
     } else {
       navigation('/edit', {
