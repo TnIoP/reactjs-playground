@@ -62,8 +62,7 @@ const App = () => {
             <th>#</th>
             <th>제목</th>
             <th>작성자</th>
-            <th>생성 시간</th>
-            <th>수정 시간</th>
+            <th>작성 시간</th>
           </tr>
         </thead>
         <tbody>
@@ -78,7 +77,6 @@ const App = () => {
                 </td>
                 <td>{item.ip}</td>
                 <td>{item.createdAt}</td>
-                <td>{item.updatedAt}</td>
               </tr>
             );
           })}

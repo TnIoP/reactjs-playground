@@ -72,9 +72,8 @@ const GetComments = () => {
                 >
                   <li>
                     댓글 id : {item.id} / 작성자 ip : {item.ip} / 댓글내용 :
-                    {'삭제된 댓글입니다.'} / 부모 id : {item.parentCommentId} /
-                    seq : {item.seq} / depth : {item.depth} / 생성 시간 :{' '}
-                    {item.createdAt} / 수정 시간 : {item.updatedAt}
+                    {'삭제된 댓글입니다.'} / 생성 시간 : {item.createdAt} / 삭제
+                    시간 : {item.updatedAt}
                   </li>
                 </ul>
               );
@@ -83,9 +82,7 @@ const GetComments = () => {
               <ul key={item.id} style={{ marginLeft: item.depth * 50 + 'px' }}>
                 <li>
                   댓글 id : {item.id} / 작성자 ip : {item.ip} / 댓글내용 :{' '}
-                  {item.contents} / 부모 id : {item.parentCommentId} / seq :{' '}
-                  {item.seq} / depth : {item.depth} / 생성 시간 :{' '}
-                  {item.createdAt} / 수정 시간 : {item.updatedAt}
+                  {item.contents} / 작성 시간 : {item.createdAt}
                   <Button
                     onClick={() => {
                       handleShowReply(item.id);

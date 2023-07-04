@@ -89,12 +89,8 @@ const DetailPost = () => {
         <label>{post.contents}</label>
       </div>
       <div>
-        <label>글 생성 시간 :</label>
+        <label>작성 시간 :</label>
         <label>{post.createdAt}</label>
-      </div>
-      <div>
-        <label>글 수정 시간 :</label>
-        <label>{post.updatedAt}</label>
       </div>
       <span>
         <input
